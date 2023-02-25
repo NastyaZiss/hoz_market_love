@@ -4,39 +4,17 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../utils/color_g.dart';
 
-class TextFormFieldWidget extends StatelessWidget {
-  // final colorBackground;
-  // final borderform;
-  final focusNode;
-  final currentFocus;
-  final nextFocus;
-
+class TextFormFieldSingInWidget extends StatelessWidget {
   final String textChild;
   final Texthelper;
   final Iconsuffix;
   final TypeKeyboard;
-  
+  final obscureText;
   final Controller;
-  final MaskTextInputFormatter maskCustom;
-  final Function()? onFieldSubmitted;
-
-  // final maskFormatter = MaskTextInputFormatter(
-  //   mask: '+7 (###) ###-##-##',
-  //   filter: {"#": RegExp(r'[0-9]')},
-  //   type: MaskAutoCompletionType.lazy,
-  // );
 
   final vallid_fun;
-  // void vallid_fun(String){}
 
-  // final textStyle;
-
-  void _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus){
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
-
-  TextFormFieldWidget({
+  TextFormFieldSingInWidget({
     super.key,
     required this.textChild,
     this.Texthelper,
@@ -44,13 +22,14 @@ class TextFormFieldWidget extends StatelessWidget {
     this.TypeKeyboard,
     required this.Controller,
     required this.vallid_fun,
-    required this.maskCustom, this.focusNode, this.currentFocus, this.nextFocus,this.onFieldSubmitted,
+    required this.obscureText,
     // this.bOT,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText,
       controller: Controller,
       decoration: InputDecoration(
         labelText: textChild,
@@ -77,16 +56,8 @@ class TextFormFieldWidget extends StatelessWidget {
           ),
         ),
       ),
-
-      focusNode: focusNode,
-      autofocus: true,
-      onFieldSubmitted: (_){
-        _fieldFocusChange(context, currentFocus,nextFocus);
-      },
-      
       keyboardType: TypeKeyboard,
       validator: vallid_fun,
-      inputFormatters: [maskCustom],
     );
   }
 }

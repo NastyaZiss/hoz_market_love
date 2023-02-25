@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:payment_app_fl/screens/singin_screen.dart';
 import 'package:payment_app_fl/utils/text_style_g.dart';
-import 'package:payment_app_fl/widgets/text_form_field_widget.dart';
-import 'utils/color_g.dart';
+import 'package:payment_app_fl/widgets/text_form_field_singup_widget.dart';
+import '../utils/color_g.dart';
 
 class RegisScreen extends StatefulWidget {
   const RegisScreen({super.key});
@@ -37,6 +38,7 @@ class _RegisScreenState extends State<RegisScreen> {
   //           });
 
   List<String> _countries = ['Мужской', 'Женский', 'Нет'];
+
   final _namefocus = FocusNode();
   final _polfocus = FocusNode();
   final _phonefocus = FocusNode();
@@ -260,12 +262,55 @@ class _RegisScreenState extends State<RegisScreen> {
 
   void _submiForm() {
     if (_formKey.currentState!.validate()) {
-      print('valid');
+      _showDialog(name: _nameController.text);
+      print('имя: ${_nameController}');
+      print('pass: ${_passController}');
+      print('phone: ${_phoneController}');
+      print('pol: ${_polController}');
+      print('email: ${_emailController}');
+    } else {
+      _showMessage(message: 'Поля неправильно заполнены, поробуйте еще раз.');
     }
-    print('имя: ${_nameController}');
-    print('pass: ${_passController}');
-    print('phone: ${_phoneController}');
-    print('pol: ${_polController}');
-    print('email: ${_emailController}');
+  }
+
+  void _showDialog({required String name}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Регистрация прошла успешно!',
+              style:
+                  TextStyle(color: Colors.green, fontWeight: FontWeight.w700),
+            ),
+            content:
+                Text('${name}, теперь вы можете войти в свой новый аккаунт .'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SinginScreen()));
+                  },
+                  child: Text('Войти')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Назад')),
+            ],
+          );
+        });
+  }
+
+  void _showMessage({String? message}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red[300],
+        duration: Duration(seconds: 3),
+        content: Text(
+          message!,
+          style: const TextStyle(color: Colors.black, fontSize: 18),
+        )));
   }
 }

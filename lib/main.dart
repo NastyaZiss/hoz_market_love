@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payment_app_fl/regis_screen.dart';
+import 'package:payment_app_fl/screens/regis_screen.dart';
 import 'utils/color_g.dart';
 
 void main() {
